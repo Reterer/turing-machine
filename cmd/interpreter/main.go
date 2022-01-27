@@ -12,11 +12,30 @@ import (
 )
 
 func main() {
-	states := turing.MakeTestStates()
+	jsonMachine, err := turing.LoadJsonMachineFromFile("test")
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	machine, err := turing.MakeMachineFromJson(jsonMachine)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
 
-	machine := turing.MakeMachine(rune(' '), []rune(""), states, 0, 0)
+	var str string
+	fmt.Println("Введите ленту:")
+	fmt.Scan(&str)
+
+	machine.SetTape([]rune(str), 0)
+	machine.TurnOn()
 	for machine.IsRunning() {
 		machine.Iterate()
+		fmt.Println(string(machine.GetTape()))
+		pos := machine.GetTapePosition()
+		for i := 0; i < pos; i++ {
+			fmt.Print(" ")
+		}
+		fmt.Println("^")
 	}
-	fmt.Println(string(machine.GetTape()))
 }

@@ -34,20 +34,18 @@ type Machine struct {
 	isRunning    bool
 }
 
-func MakeMachine(lambda rune, tape []rune, states []State, startState int, startTapeCell int) *Machine {
-	return &Machine{
-		lambda:       lambda,
-		tape:         tape,
-		states:       states,
-		currState:    startState,
-		currTapeCell: startState,
-		isRunning:    true,
-	}
-}
+/*
+Может будет лучше, если я буду делать машины из представления
+например MakeMachineFromJson
+А затем SetTape
+и только затем Enable
+и Iterate или Run
+и сдлеть все остальное приватным
+*/
 
 func (m *Machine) Iterate() error {
 	if !m.isRunning {
-		return errors.New("Machine was stopped")
+		return errors.New("machine was stopped")
 	}
 
 	currState := &m.states[m.currState]
@@ -63,7 +61,7 @@ func (m *Machine) Iterate() error {
 	if cmd, ok := currState.commands[*currChar]; ok {
 		// Обработка возможных ошибок
 		if cmd.move == mLeft && m.currTapeCell == 0 {
-			return errors.New("Index out of bounds < 0")
+			return errors.New("index out of bounds < 0")
 		}
 
 		// Изменение символа на ленте
@@ -80,7 +78,7 @@ func (m *Machine) Iterate() error {
 		// Смена состояния на следующее
 		m.currState = cmd.nextState
 	} else {
-		return errors.New("Unkown char on tape")
+		return errors.New("unkown char on tape")
 	}
 
 	return nil
@@ -90,32 +88,32 @@ func (m *Machine) IsRunning() bool {
 	return m.isRunning
 }
 
+func (m *Machine) GetTapePosition() int {
+	return m.currTapeCell
+}
+
 func (m *Machine) GetTape() []rune {
 	return m.tape
 }
 
-func MakeTestStates() []State {
-	return []State{
-		State{
-			commands: map[rune]Command{
-				' ': Command{
-					move:      mRight,
-					char:      '+',
-					nextState: 1},
-			},
-			isFinite: false,
-		},
-		State{
-			commands: map[rune]Command{
-				' ': Command{
-					move:      mRight,
-					char:      '+',
-					nextState: 2},
-			},
-			isFinite: false,
-		},
-		State{
-			isFinite: true,
-		},
+func (m *Machine) SetTape(tape []rune, initPosition int) error {
+	if m.isRunning {
+		return errors.New("machine is running")
 	}
+	if len(tape) < initPosition {
+		return errors.New("the length of the tape is less than the initial position")
+	}
+
+	m.currTapeCell = initPosition
+	m.tape = tape
+	return nil
 }
+
+func (m *Machine) TurnOn() {
+	m.isRunning = true
+}
+
+/*
+func (m *Machine) Run() ||
+func (m *Machine) Run(breakpoints []int)
+*/
