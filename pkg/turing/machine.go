@@ -34,15 +34,6 @@ type Machine struct {
 	isRunning    bool
 }
 
-/*
-Может будет лучше, если я буду делать машины из представления
-например MakeMachineFromJson
-А затем SetTape
-и только затем Enable
-и Iterate или Run
-и сдлеть все остальное приватным
-*/
-
 func (m *Machine) Iterate() error {
 	if !m.isRunning {
 		return errors.New("machine was stopped")

@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	jsonMachine, err := turing.LoadJsonMachineFromFile("test")
+	jsonMachine, err := turing.LoadJsonMachineFromFile("examples/json/replacer.json")
 	if err != nil {
 		fmt.Println(err.Error())
 		return

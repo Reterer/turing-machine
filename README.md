@@ -5,7 +5,7 @@ Implementation of a Turing machine
 
 ## Todo list
 - [x] turing machine interpreter
-- [ ] loading a json description of a turing machine
+- [x] loading a json description of a turing machine
 - [ ] debug mode
 - [ ] support for a simpler description of the Turing machine
 - [ ] learn how to use go tests
@@ -65,6 +65,3 @@ example of a valid file:
 }
 ```
 this program replaces characters with spaces.
-
-
-

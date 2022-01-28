@@ -3,6 +3,8 @@ package turing
 import (
 	"encoding/json"
 	"errors"
+	"io/ioutil"
+	"os"
 )
 
 type JsonMachine struct {
@@ -26,31 +28,17 @@ type JsonCommand struct {
 }
 
 func LoadJsonMachineFromFile(filename string) (*JsonMachine, error) {
-
-	return LoadJsonMachineFromJson([]byte(`
-	{
-		"alphabet" : "abcd*",
-		"lambda" : "*",
-		"start" : "replacer",
-		"final" : ["final"],
-		"states" : [
-			{
-				"name" : "replacer",
-				"transitions" : [
-					{ "ch" : "a", "nch" : "*", "mv" : "r", "nst" : "replacer" },
-					{ "ch" : "b", "nch" : "*", "mv" : "r", "nst" : "replacer" },
-					{ "ch" : "c", "nch" : "*", "mv" : "r", "nst" : "replacer" },
-					{ "ch" : "d", "nch" : "*", "mv" : "r", "nst" : "replacer" },
-					{ "ch" : "*", "nch" : "*", "mv" : "n", "nst" : "final" }
-				]
-			},
-			{
-				"name" : "final",
-				"transitions" : []
-			}
-		]
+	file, err := os.Open(filename)
+	if err != nil {
+		return nil, err
 	}
-	`))
+	defer file.Close()
+
+	data, err := ioutil.ReadAll(file)
+	if err != nil {
+		return nil, err
+	}
+	return LoadJsonMachineFromJson(data)
 }
 
 func LoadJsonMachineFromJson(jsonData []byte) (*JsonMachine, error) {

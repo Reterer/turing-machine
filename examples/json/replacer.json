@@ -1,0 +1,22 @@
+{
+    "alphabet" : "abcd*",
+    "lambda" : "*",
+    "start" : "replacer",
+    "final" : ["final"],
+    "states" : [
+        {
+            "name" : "replacer",
+            "transitions" : [
+                { "ch" : "a", "nch" : "*", "mv" : "r", "nst" : "replacer" },
+                { "ch" : "b", "nch" : "*", "mv" : "r", "nst" : "replacer" },
+                { "ch" : "c", "nch" : "*", "mv" : "r", "nst" : "replacer" },
+                { "ch" : "d", "nch" : "*", "mv" : "r", "nst" : "replacer" },
+                { "ch" : "*", "nch" : "*", "mv" : "n", "nst" : "final" }
+            ]
+        },
+        {
+            "name" : "final",
+            "transitions" : []
+        }
+    ]
+}
