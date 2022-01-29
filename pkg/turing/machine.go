@@ -69,7 +69,7 @@ func (m *Machine) Iterate() error {
 		// Смена состояния на следующее
 		m.currState = cmd.nextState
 	} else {
-		return errors.New("unkown char on tape")
+		return errors.New("there is no transition defined for the current character on tape")
 	}
 
 	return nil
@@ -104,7 +104,4 @@ func (m *Machine) TurnOn() {
 	m.isRunning = true
 }
 
-/*
-func (m *Machine) Run() ||
-func (m *Machine) Run(breakpoints []int)
-*/
+// TODO func (m *Machine) Run() || func (m *Machine) Run(breakpoints []int)

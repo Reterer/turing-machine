@@ -6,9 +6,10 @@ Implementation of a Turing machine
 ## Todo list
 - [x] turing machine interpreter
 - [x] loading a json description of a turing machine
-- [ ] debug mode
+- [ ] go tests
+- [ ] good validation of the turing machine
 - [ ] support for a simpler description of the Turing machine
-- [ ] learn how to use go tests
+- [ ] debug mode
 
 ## How to run interpreter
 ```
